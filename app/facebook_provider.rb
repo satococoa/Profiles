@@ -10,10 +10,12 @@ class FacebookProvider < Provider
   end
 
   def profile(username)
-    url = 'https://graph.facebook.com/me'
-    params = {}
+    url = 'https://graph.facebook.com/%s' % username
+    params = {
+      fields: 'id,name,link,username,bio,email,website,picture'
+    }
     send_request(url, :get, params) do |data|
-      NSLog("%@", data)
+      p data
     end
   end
 
@@ -21,7 +23,7 @@ class FacebookProvider < Provider
     url = 'https://graph.facebook.com/%s/feed' % username
     params = {}
     send_request(url, :get, params) do |data|
-      NSLog("%@", data)
+      p data
     end
   end
 end
