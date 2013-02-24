@@ -2,6 +2,7 @@ class TwitterProvider < Provider
   def initialize
     @account_type_identifier = ACAccountTypeIdentifierTwitter
     @service_type = SLServiceTypeTwitter
+    @request_options = nil
   end
 
   def profile(username)

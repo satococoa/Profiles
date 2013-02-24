@@ -19,7 +19,7 @@ class Provider
   def send_request(url_string, method, params, &block)
     return unless can_access?
     account_store.requestAccessToAccountsWithType(account_type,
-      options:nil,
+      options:@request_options,
       completion:lambda {|granted, error|
         methods = {
           get: SLRequestMethodGET,
@@ -49,7 +49,9 @@ class Provider
             }
           )
         else
-          App.alert(error.localizedDescription)
+          Dispatch::Queue.main.async {
+            App.alert(error.localizedDescription)
+          }
         end
       }
     )
