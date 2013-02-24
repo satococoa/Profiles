@@ -21,11 +21,6 @@ class Twitter
         options: nil,
         completion:lambda{|granted, error|
           if granted
-            # debug
-            accounts.each do |ac|
-              p ac.username
-              p ac.accountDescription
-            end
             url = NSURL.URLWithString('https://api.twitter.com/1.1/statuses/user_timeline.json')
             params = {
               screen_name: username,
@@ -56,8 +51,6 @@ class Twitter
           end
         }
       )
-    else
-      []
     end
   end
 end
