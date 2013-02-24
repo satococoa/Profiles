@@ -1,6 +1,6 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    @twitter = Twitter.new
+    @twitter = TwitterProvider.new
     @twitter.timeline('satococoa')
     @twitter.profile('satococoa')
     true

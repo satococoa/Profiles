@@ -1,41 +1,18 @@
-class Twitter
+class Provider
   def account_store
-    @account_store ||= ACAccountStore.new
+    @@account_store ||= ACAccountStore.new
   end
 
   def account_type
-    @account_type ||= account_store.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+    @account_type ||= account_store.accountTypeWithAccountTypeIdentifier(@account_type_identifier)
+  end
+
+  def can_access?
+    SLComposeViewController.isAvailableForServiceType(@service_type)
   end
 
   def accounts
     account_store.accountsWithAccountType(account_type)
-  end
-
-  def can_access?
-    SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)
-  end
-
-  def profile(username)
-    url = 'http://api.twitter.com/1.1/users/show.json'
-    params = {
-      screen_name: username
-    }
-    send_request(url, :get, params) do |data|
-      p data
-    end
-  end
-
-  def timeline(username)
-    url = 'https://api.twitter.com/1.1/statuses/user_timeline.json'
-    params = {
-      screen_name: username,
-      include_rts: '0',
-      trim_user: '1',
-      count: '1'
-    }
-    send_request(url, :get, params) do |data|
-      p data
-    end
   end
 
   private
@@ -77,5 +54,4 @@ class Twitter
       }
     )
   end
-
 end
