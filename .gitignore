@@ -16,3 +16,4 @@ nbproject
 .idea
 vendor/bundle
 .bundle
+config.yml
