@@ -29,12 +29,12 @@ class Provider
         if granted
           url = NSURL.URLWithString(url_string)
           request = SLRequest.requestForServiceType(
-            SLServiceTypeTwitter,
+            @service_type,
             requestMethod:methods[method],
             URL:url,
             parameters:params
           )
-          request.setAccount(accounts.last)
+          request.account = accounts.last
           request.performRequestWithHandler(
             lambda{|data, response, error| 
               if data
