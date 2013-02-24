@@ -4,16 +4,14 @@ class FacebookProvider < Provider
     @service_type = SLServiceTypeFacebook
     @request_options = {
       ACFacebookAppIdKey => '428001310620805',
-      ACFacebookPermissionsKey => ['public_actions', 'publish_stream', 'offline_access', 'email'],
+      ACFacebookPermissionsKey => ['email'],
       ACFacebookAudienceKey => ACFacebookAudienceOnlyMe
     }
   end
 
   def profile(username)
-    url = 'http://api.twitter.com/1.1/users/show.json'
-    params = {
-      screen_name: username
-    }
+    url = 'https://graph.facebook.com/me'
+    params = {}
     send_request(url, :get, params) do |data|
       NSLog("%@", data)
     end
