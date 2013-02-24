@@ -1,6 +1,14 @@
 class Twitter
-  def initialize
-    @account_store = ACAccountStore.new
+  def account_store
+    @account_store ||= ACAccountStore.new
+  end
+
+  def account_type
+    @account_type ||= account_store.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+  end
+
+  def accounts
+    account_store.accountsWithAccountType(account_type)
   end
 
   def can_access?
@@ -9,12 +17,10 @@ class Twitter
 
   def timeline(username)
     if can_access?
-      account_type = @account_store.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
-      @account_store.requestAccessToAccountsWithType(account_type,
+      account_store.requestAccessToAccountsWithType(account_type,
         options: nil,
         completion:lambda{|granted, error|
           if granted
-            accounts = @account_store.accountsWithAccountType(account_type)
             # debug
             accounts.each do |ac|
               p ac.username
